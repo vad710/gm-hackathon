@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script  type="text/javascript">
+
+
+        function StartIt() {
+            $.get("http://fysio-erp.nl/api/app.php?lat=5&long=5", function (data) {
+                alert("Navigation Started!");
+            });
+        }
+
+    </script>
+<body>
+    <h1>GM Remote Start</h1>
+
+    <button
+        onclick="StartIt()" >Start Navigation
+    </button>
+
+
+</body>
+</html>

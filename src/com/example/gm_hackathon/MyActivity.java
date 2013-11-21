@@ -1,28 +1,22 @@
 package com.example.gm_hackathon;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CalendarContract;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-//import java.util.Calendar;
-
-//variable for selection intent
 
 
 public class MyActivity extends Activity {
@@ -56,21 +50,48 @@ public class MyActivity extends Activity {
                 PickAPhoto();
             }
         };
-
         selectPhotoButton.setOnClickListener(pickPhotoListener);
+
+        Button sendToCarButton = (Button) findViewById(R.id.sendToCarButton);
+        View.OnClickListener sendToCarListener = new View.OnClickListener(){
+            public void onClick(View v){
+                try {
+                    SendToCar();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        sendToCarButton.setOnClickListener(sendToCarListener);
 
     }
 
     private void PickAPhoto()
     {
-
-
         //take the user to their chosen image selection app (gallery or file manager)
         Intent pickIntent = new Intent();
         pickIntent.setType("image/*");
         pickIntent.setAction(Intent.ACTION_GET_CONTENT);
         //we will handle the returned data in onActivityResult
         startActivityForResult(Intent.createChooser(pickIntent, "Select Picture"), PICKER);
+    }
+
+    private void SendToCar() throws IOException {
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpResponse response = httpclient.execute(new HttpGet("http://google.com"));
+        StatusLine statusLine = response.getStatusLine();
+        if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            response.getEntity().writeTo(out);
+            out.close();
+            String responseString = out.toString();
+            //..more logic
+        } else{
+            //Closes the connection.
+            response.getEntity().getContent().close();
+            throw new IOException(statusLine.getReasonPhrase());
+        }
     }
 }
 

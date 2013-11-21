@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>GM Remote Start</title>
 </head>
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     
@@ -20,15 +20,28 @@
                 alert("Navigation Started!");
             });
         }
+        
+        function SelectImage() {
+            alert("Not implemented yet...");
+        }
 
     </script>
-<body>
-    <h1>GM Remote Start</h1>
+    <body>
+        <div class="container">
+            <h1>GM Remote Start</h1>
+            
+            <button
+                class="btn btn-primary"
+                onclick="SelectImage()" >
+                Select an Image
+            </button>
 
-    <button
-        onclick="StartIt()" >Start Navigation
-    </button>
+            <button
+                class="btn btn-primary"
+                onclick="StartIt()" >
+                Start Navigation
+            </button>
+        </div>
 
-
-</body>
+    </body>
 </html>
